@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://gwhniyru7i5q"]
+
+[ext_resource type="Script" uid="uid://yq3eoudk7ifu" path="res://scripts/loot/Hook.gd" id="1_hook"]
+[ext_resource type="Texture2D" uid="uid://dw6thpdh6dad5" path="res://art/loot_sprites.png" id="2_hook_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(40, 45)
+
+[node name="Hook" type="RigidBody2D"]
+script = ExtResource("1_hook")
+
+[node name="HookCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="HookSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_hook_texture")
+region_enabled = true
+region_rect = Rect2(270.125, 23.188, 217.125, 217.125)

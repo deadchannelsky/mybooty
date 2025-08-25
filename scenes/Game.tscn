@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://lresojblyp2w"]
+
+[ext_resource type="Script" uid="uid://j73gha67ajn" path="res://scripts/Game.gd" id="1_3b4c5d"]
+[ext_resource type="PackedScene" uid="uid://cnpeicd4jfyrt" path="res://scenes/UI.tscn" id="2_4c5d6e"]
+[ext_resource type="PackedScene" uid="uid://bcssjwq1mw5es" path="res://scenes/ShipDeck.tscn" id="3_5e6f7g"]
+[ext_resource type="PackedScene" uid="uid://5yc8bku5so3e" path="res://scenes/OceanBackground.tscn" id="4_6f7g8h"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_3b4c5d")
+
+[node name="OceanBackground" parent="." instance=ExtResource("4_6f7g8h")]
+
+[node name="ShipDeck" parent="." instance=ExtResource("3_5e6f7g")]
+position = Vector2(360, 1000)
+
+[node name="UI" parent="." instance=ExtResource("2_4c5d6e")]
+layer = 10

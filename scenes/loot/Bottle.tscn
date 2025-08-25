@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjhy05nwah50j"]
+
+[ext_resource type="Script" uid="uid://wo55x6v26m2q" path="res://scripts/loot/Bottle.gd" id="1_bottle"]
+[ext_resource type="Texture2D" uid="uid://dw6thpdh6dad5" path="res://art/loot_sprites.png" id="2_bottle_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(25, 55)
+
+[node name="Bottle" type="RigidBody2D"]
+script = ExtResource("1_bottle")
+
+[node name="BottleCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="BottleSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_bottle_texture")
+region_enabled = true
+region_rect = Rect2(543.125, 36.125, 129.375, 229.5)

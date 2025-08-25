@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://djw6jhbqiyty1"]
+
+[ext_resource type="Script" uid="uid://dxehrcel1tm7a" path="res://scripts/loot/Sword.gd" id="1_sword"]
+[ext_resource type="Texture2D" uid="uid://dw6thpdh6dad5" path="res://art/loot_sprites.png" id="2_sword_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(15, 75)
+
+[node name="Sword" type="RigidBody2D"]
+script = ExtResource("1_sword")
+
+[node name="SwordCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="SwordSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_sword_texture")
+region_enabled = true
+region_rect = Rect2(29.375, 25.438, 219.375, 238.5)

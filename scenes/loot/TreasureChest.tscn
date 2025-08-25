@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dooxdtubaloxd"]
+
+[ext_resource type="Script" uid="uid://dp7ae5wsag4iy" path="res://scripts/loot/TreasureChest.gd" id="1_treasure_chest"]
+[ext_resource type="Texture2D" uid="uid://dw6thpdh6dad5" path="res://art/loot_sprites.png" id="2_treasure_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(70, 50)
+
+[node name="TreasureChest" type="RigidBody2D"]
+script = ExtResource("1_treasure_chest")
+
+[node name="TreasureChestCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="TreasureChestSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_treasure_texture")
+region_enabled = true
+region_rect = Rect2(739.25, 286.438, 248.625, 192.375)

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7r4qgdat8dak"]
+
+[ext_resource type="Script" uid="uid://dk43cw1sy2m41" path="res://scripts/loot/Cannonball.gd" id="1_cannonball"]
+[ext_resource type="Texture2D" uid="uid://dw6thpdh6dad5" path="res://art/loot_sprites.png" id="2_cannonball_texture"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 25.0
+
+[node name="Cannonball" type="RigidBody2D"]
+script = ExtResource("1_cannonball")
+
+[node name="CannonballCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1")
+
+[node name="CannonballSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_cannonball_texture")
+region_enabled = true
+region_rect = Rect2(296, 283.063, 174.375, 185.625)

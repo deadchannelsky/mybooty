@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cws54q0k0c28p"]
+
+[ext_resource type="Script" uid="uid://cbbc0ydtpq5v8" path="res://scripts/loot/Skull.gd" id="1_skull"]
+[ext_resource type="Texture2D" uid="uid://dw6thpdh6dad5" path="res://art/loot_sprites.png" id="2_skull_texture"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 30.0
+
+[node name="Skull" type="RigidBody2D"]
+script = ExtResource("1_skull")
+
+[node name="SkullCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1")
+
+[node name="SkullSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_skull_texture")
+region_enabled = true
+region_rect = Rect2(751.625, 501.313, 196.875, 178.875)
