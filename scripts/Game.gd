@@ -14,6 +14,13 @@ extends Node2D
 @export var sword_scene: PackedScene = preload("res://scenes/loot/Sword.tscn")
 @export var hook_scene: PackedScene = preload("res://scenes/loot/Hook.tscn")
 @export var skull_scene: PackedScene = preload("res://scenes/loot/Skull.tscn")
+@export var cup_scene: PackedScene = preload("res://scenes/loot/Cup.tscn")
+@export var idol_scene: PackedScene = preload("res://scenes/loot/Idol.tscn")
+@export var crown_scene: PackedScene = preload("res://scenes/loot/Crown.tscn")
+@export var hat_scene: PackedScene = preload("res://scenes/loot/Hat.tscn")
+@export var spyglass_scene: PackedScene = preload("res://scenes/loot/Spyglass.tscn")
+@export var pegleg_scene: PackedScene = preload("res://scenes/loot/Pegleg.tscn")
+@export var map_scene: PackedScene = preload("res://scenes/loot/Map.tscn")
 
 # Loot type weights for random selection (higher = more common)
 var loot_weights: Dictionary = {
@@ -23,7 +30,14 @@ var loot_weights: Dictionary = {
 	"cannonball": 1,
 	"skull": 2,
 	"hook": 1,
-	"sword": 1  # Rarest due to difficulty
+	"sword": 1,  # Rarest due to difficulty
+	"cup": 2,
+	"idol": 2,
+	"crown": 1,  # Rare due to high value
+	"hat": 3,  # Common due to light weight
+	"spyglass": 1,  # Rare navigational tool
+	"pegleg": 2,
+	"map": 1  # Rarest due to highest value
 }
 
 var score: int = 0
@@ -173,6 +187,20 @@ func spawn_loot_item(loot_type: String, position: Vector2) -> LootItem:
 			loot_item = hook_scene.instantiate() as LootItem
 		"skull":
 			loot_item = skull_scene.instantiate() as LootItem
+		"cup":
+			loot_item = cup_scene.instantiate() as LootItem
+		"idol":
+			loot_item = idol_scene.instantiate() as LootItem
+		"crown":
+			loot_item = crown_scene.instantiate() as LootItem
+		"hat":
+			loot_item = hat_scene.instantiate() as LootItem
+		"spyglass":
+			loot_item = spyglass_scene.instantiate() as LootItem
+		"pegleg":
+			loot_item = pegleg_scene.instantiate() as LootItem
+		"map":
+			loot_item = map_scene.instantiate() as LootItem
 		_:
 			print("Unknown loot type: ", loot_type)
 			return null

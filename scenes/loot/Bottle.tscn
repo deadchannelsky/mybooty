@@ -16,4 +16,4 @@ shape = SubResource("RectangleShape2D_1")
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_bottle_texture")
 region_enabled = true
-region_rect = Rect2(543.125, 36.125, 129.375, 229.5)
+region_rect = Rect2(533.436, 36.125, 154.339, 229.5)

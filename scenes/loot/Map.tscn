@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://drn2hiy31ixe3"]
+
+[ext_resource type="Script" uid="uid://cilgwu2aki3wk" path="res://scripts/loot/Map.gd" id="1_map"]
+[ext_resource type="Texture2D" uid="uid://dw6thpdh6dad5" path="res://art/loot_sprites.png" id="2_map_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(35, 25)
+
+[node name="Map" type="RigidBody2D"]
+script = ExtResource("1_map")
+
+[node name="MapCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="MapSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_map_texture")
+region_enabled = true
+region_rect = Rect2(728.502, 690.99, 259.374, 171.487)

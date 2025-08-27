@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://jqr5i5eetc8t"]
+
+[ext_resource type="Script" uid="uid://by4eckrvahikr" path="res://scripts/loot/Hat.gd" id="1_hat"]
+[ext_resource type="Texture2D" uid="uid://dw6thpdh6dad5" path="res://art/loot_sprites.png" id="2_hat_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(40, 20)
+
+[node name="Hat" type="RigidBody2D"]
+script = ExtResource("1_hat")
+
+[node name="HatCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="HatSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_hat_texture")
+region_enabled = true
+region_rect = Rect2(471.272, 775.82, 282.641, 186.492)

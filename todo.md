@@ -32,14 +32,14 @@
   - [ ] Hook
   - [ ] Bottle
   - [ ] Fish
-  - [ ] Cup
-  - [ ] Skull
-  - [ ] Idol
-  - [ ] Crown
-  - [ ] Hat
-  - [ ] Spyglas
-  - [ ] Pegleg
-  - [ ] Map
+  - [x] Cup
+  - [x] Skull  
+  - [x] Idol
+  - [x] Crown
+  - [x] Hat
+  - [x] Spyglass
+  - [x] Pegleg
+  - [x] Map
 
 - [ ] Create loot spawner system (random selection)
 - [ ] Add basic sprites/placeholder art for each loot type

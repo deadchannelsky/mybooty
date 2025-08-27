@@ -22,11 +22,18 @@ var loot_texture: Texture2D = preload("res://art/loot_sprites.png")
 var loot_sprite_regions: Dictionary = {
 	"barrel": Rect2(528, 284, 170, 207),
 	"cannonball": Rect2(291, 284, 183, 178),
-	"treasure_chest": Rect2(480, 150, 80, 80),
+	"treasure_chest": Rect2(735, 276, 257, 201),
 	"bottle": Rect2(530, 29, 154, 246),
 	"sword": Rect2(23, 24, 222, 238),
 	"hook": Rect2(528, 33, 164, 240),
-	"skull": Rect2(755, 491, 178, 196)
+	"skull": Rect2(755, 491, 178, 196),
+	"cup": Rect2(314.79, 489.493, 158.626, 214.359),
+	"idol": Rect2(38.2666, 673.841, 192.923, 214.359),
+	"crown": Rect2(276, 707, 213, 145),
+	"hat": Rect2(466.672, 775.82, 287.241, 186.492),
+	"spyglass": Rect2(193.55, 858.433, 255.087, 143.62),
+	"pegleg": Rect2(764.92, 853.757, 184.349, 152.195),
+	"map": Rect2(728.502, 690.99, 259.374, 171.487)
 	}
 
 func _ready() -> void:

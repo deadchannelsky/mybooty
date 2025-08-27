@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkrn11jeymotv"]
+
+[ext_resource type="Script" uid="uid://u68unjw7dj5o" path="res://scripts/loot/Cup.gd" id="1_cup"]
+[ext_resource type="Texture2D" uid="uid://dw6thpdh6dad5" path="res://art/loot_sprites.png" id="2_cup_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(28, 35)
+
+[node name="Cup" type="RigidBody2D"]
+script = ExtResource("1_cup")
+
+[node name="CupCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="CupSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_cup_texture")
+region_enabled = true
+region_rect = Rect2(314.79, 489.493, 158.626, 214.359)

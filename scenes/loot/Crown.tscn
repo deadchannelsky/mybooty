@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://tp6i4dcafyh6"]
+
+[ext_resource type="Script" uid="uid://d3gpcwaq26da" path="res://scripts/loot/Crown.gd" id="1_crown"]
+[ext_resource type="Texture2D" uid="uid://dw6thpdh6dad5" path="res://art/loot_sprites.png" id="2_crown_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(35, 25)
+
+[node name="Crown" type="RigidBody2D"]
+script = ExtResource("1_crown")
+
+[node name="CrownCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="CrownSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_crown_texture")
+region_enabled = true
+region_rect = Rect2(282.636, 703.852, 212.215, 145.764)

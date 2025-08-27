@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dpq7usgaggixu"]
+
+[ext_resource type="Script" uid="uid://cp7pa40iblhno" path="res://scripts/loot/Pegleg.gd" id="1_pegleg"]
+[ext_resource type="Texture2D" uid="uid://dw6thpdh6dad5" path="res://art/loot_sprites.png" id="2_pegleg_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(18, 50)
+
+[node name="Pegleg" type="RigidBody2D"]
+script = ExtResource("1_pegleg")
+
+[node name="PeglegCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="PeglegSprite" type="Sprite2D" parent="."]
+rotation = -1.60919
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_pegleg_texture")
+region_enabled = true
+region_rect = Rect2(764.92, 853.757, 184.349, 152.195)
