@@ -11,7 +11,7 @@ script = ExtResource("1_3b4c5d")
 [node name="OceanBackground" parent="." instance=ExtResource("4_6f7g8h")]
 
 [node name="ShipDeck" parent="." instance=ExtResource("3_5e6f7g")]
-position = Vector2(360, 1000)
+position = Vector2(360, 600)
 
 [node name="UI" parent="." instance=ExtResource("2_4c5d6e")]
 layer = 10

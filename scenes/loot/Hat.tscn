@@ -16,4 +16,4 @@ shape = SubResource("RectangleShape2D_1")
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_hat_texture")
 region_enabled = true
-region_rect = Rect2(471.272, 775.82, 282.641, 186.492)
+region_rect = Rect2(478.722, 773.983, 268.652, 188.329)

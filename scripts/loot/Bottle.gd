@@ -8,7 +8,7 @@ func _ready() -> void:
 	# Set bottle-specific properties
 	loot_type = "bottle"
 	base_score = 20  # Moderate score due to difficulty
-	loot_mass = 1.0  # Light weight
+	loot_mass = 0.3  # Light weight
 	loot_friction = 0.7  # Moderate friction
 	loot_bounce = 0.3  # Moderate bounce from glass
 	

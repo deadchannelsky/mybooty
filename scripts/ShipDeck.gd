@@ -6,7 +6,7 @@ class_name ShipDeck
 
 signal ship_tipped_over(angle: float)
 
-@export var max_tilt_angle: float = 25.0  # Maximum tilt before game over
+@export var max_tilt_angle: float = 20.0  # Maximum tilt before game over
 @export var rocking_speed: float = 1.0    # Speed of ship rocking motion
 @export var rocking_amplitude: float = 3.0 # Amplitude of rocking in degrees
 
@@ -74,7 +74,7 @@ func calculate_load_tilt() -> float:
 	if total_weight > 0:
 		# Calculate tilt based on weight distribution
 		var center_of_mass_offset: float = weight_distribution / total_weight
-		return (center_of_mass_offset / 300.0) * 15.0  # Scale to reasonable tilt
+		return (center_of_mass_offset / 200.0) * 20.0  # Scale to reasonable tilt
 	
 	return 0.0
 

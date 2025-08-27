@@ -7,24 +7,27 @@ signal start_game_requested
 signal quit_game_requested
 
 @onready var play_button: Button = $PlayButton
-@onready var how_to_play_button: Button = $ChallengesButton
-@onready var quit_button: Button = $LeaderboardsButton
+@onready var quit_button: Button = $ChallengesButton  # Repurposed ChallengesButton as quit button
 
 func _ready() -> void:
-	# Connect button pressed signals
-	play_button.pressed.connect(_on_play_button_pressed)
-	how_to_play_button.pressed.connect(_on_how_to_play_button_pressed)
-	quit_button.pressed.connect(_on_quit_button_pressed)
+	# Connect button pressed signals with null checks
+	if play_button:
+		play_button.pressed.connect(_on_play_button_pressed)
+		play_button.mouse_entered.connect(_on_play_button_hover)
+	else:
+		print("ERROR: PlayButton node not found in MainMenu scene")
 	
-	# Connect mouse entered for debugging
-	play_button.mouse_entered.connect(_on_play_button_hover)
-	how_to_play_button.mouse_entered.connect(_on_how_to_play_button_hover)
-	quit_button.mouse_entered.connect(_on_quit_button_hover)
+	if quit_button:
+		quit_button.pressed.connect(_on_quit_button_pressed)
+		quit_button.mouse_entered.connect(_on_quit_button_hover)
+	else:
+		print("ERROR: ChallengesButton (quit button) node not found in MainMenu scene")
 	
 	print("Main menu ready - Welcome to My Booty!")
-	print("Play button position: ", play_button.position)
-	print("Challenges button position: ", how_to_play_button.position)
-	print("Quit button position: ", quit_button.position)
+	if play_button:
+		print("Play button position: ", play_button.position)
+	if quit_button:
+		print("Quit button position: ", quit_button.position)
 
 ## Button input handlers are now direct pressed() signal callbacks
 
@@ -33,45 +36,16 @@ func _on_play_button_pressed() -> void:
 	print("Starting game...")
 	start_game_requested.emit()
 
-func _on_how_to_play_button_pressed() -> void:
-	## Shows how to play instructions
-	show_instructions()
 
 func _on_quit_button_pressed() -> void:
 	## Handles quit button press
 	print("Quitting game...")
 	quit_game_requested.emit()
 
-func show_instructions() -> void:
-	## Displays game instructions in a simple popup
-	var instruction_text = """
-	HOW TO PLAY MY BOOTY:
-	
-	🏴‍☠️ TAP anywhere to drop loot onto your ship
-	📦 Stack loot carefully - don't let it fall overboard!
-	⚖️ Keep your ship balanced - if it tips too far, you lose
-	💰 Each loot type has different point values
-	🎯 Try to beat your high score!
-	
-	GAME OVER when:
-	- Ship tips over (>25°)
-	- Too many items fall off (3+)
-	- All loot is lost at sea
-	
-	Press R to restart anytime
-	Press ESC to return to menu
-	
-	Good luck, Captain! ⚓
-	"""
-	
-	print(instruction_text)
-	# TODO: Create proper instruction popup in Phase 2
 
 func _on_play_button_hover() -> void:
 	print("Mouse entered play button")
 
-func _on_how_to_play_button_hover() -> void:
-	print("Mouse entered how to play button")
 
 func _on_quit_button_hover() -> void:
 	print("Mouse entered quit button")

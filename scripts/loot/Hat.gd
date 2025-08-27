@@ -8,7 +8,7 @@ func _ready() -> void:
 	# Set hat-specific properties  
 	loot_type = "hat"
 	base_score = 15  # Lower score due to lighter weight and stability
-	loot_mass = 0.5  # Very light weight from fabric
+	loot_mass = 0.2  # Very light weight from fabric
 	loot_friction = 0.85  # High friction from fabric texture
 	loot_bounce = 0.05  # Very low bounce from soft material
 	

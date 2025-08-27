@@ -8,7 +8,7 @@ func _ready() -> void:
 	# Set treasure chest-specific properties
 	loot_type = "treasure_chest"
 	base_score = 30  # High score for valuable treasure
-	loot_mass = 4.0  # Heavy due to treasure contents
+	loot_mass = 8.0  # Heavy due to treasure contents
 	loot_friction = 1.0  # High friction for stability
 	loot_bounce = 0.0  # No bounce - solid and stable
 	

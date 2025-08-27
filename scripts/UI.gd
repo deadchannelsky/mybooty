@@ -3,19 +3,27 @@ extends CanvasLayer
 ## UI manager that handles all user interface elements
 ## Displays score, game state indicators, and menu screens
 
-@onready var score_label: Label = $ScoreLabel
-@onready var next_loot_sprite: Sprite2D = $NextLootContainer/NextLootSprite
-@onready var pause_button: Button = $PauseButton
-@onready var warning_label: Label = $WarningLabel
-@onready var game_over_container: Control = $GameOverContainer
-@onready var reason_label: Label = $GameOverContainer/GameOverPanel/GameOverVBox/ReasonLabel
-@onready var final_score_label: Label = $GameOverContainer/GameOverPanel/GameOverVBox/FinalScoreLabel
-@onready var restart_button: Button = $GameOverContainer/GameOverPanel/GameOverVBox/RestartButton
-@onready var menu_button: Button = $GameOverContainer/GameOverPanel/GameOverVBox/MenuButton
+@onready var score_label: Label = get_node_or_null("ScoreLabel")
+@onready var next_loot_sprite: Sprite2D = get_node_or_null("NextLootContainer/NextLootSprite")
+@onready var pause_button: Button = get_node_or_null("PauseButton")
+@onready var warning_label: Label = get_node_or_null("WarningLabel")
+@onready var game_over_container: Control = get_node_or_null("GameOverContainer")
+@onready var reason_label: Label = get_node_or_null("GameOverContainer/GameOverPanel/GameOverVBox/ReasonLabel")
+@onready var final_score_label: Label = get_node_or_null("GameOverContainer/GameOverPanel/GameOverVBox/FinalScoreLabel")
+@onready var restart_button: Button = get_node_or_null("GameOverContainer/GameOverPanel/GameOverVBox/RestartButton")
+@onready var menu_button: Button = get_node_or_null("GameOverContainer/GameOverPanel/GameOverVBox/MenuButton")
+@onready var pause_overlay: Control = get_node_or_null("PauseOverlay")
+@onready var continue_button: Button = get_node_or_null("PauseOverlay/PausePanel/PauseVBox/ContinueButton")
+@onready var quit_to_menu_button: Button = get_node_or_null("PauseOverlay/PausePanel/PauseVBox/QuitToMenuButton")
 
 signal pause_game_requested
 signal restart_game_requested
 signal return_to_menu_requested
+signal continue_game_requested
+signal quit_to_menu_from_pause_requested
+
+# Ad integration state
+var _waiting_for_ad_to_close: bool = false
 
 # Loot sprite texture and regions
 var loot_texture: Texture2D = preload("res://art/loot_sprites.png")
@@ -40,14 +48,47 @@ func _ready() -> void:
 	# Initialize UI elements
 	update_score(0)
 	
-	# Connect button signals
-	pause_button.pressed.connect(_on_pause_button_pressed)
-	restart_button.pressed.connect(_on_restart_button_pressed)
-	menu_button.pressed.connect(_on_menu_button_pressed)
+	# Connect button signals with null checks
+	if pause_button:
+		pause_button.pressed.connect(_on_pause_button_pressed)
+		print("UI: Connected pause button signal")
+	else:
+		print("ERROR: PauseButton node not found in UI scene")
+	
+	if restart_button:
+		restart_button.pressed.connect(_on_restart_button_pressed)
+		print("UI: Connected restart button signal")
+	else:
+		print("ERROR: RestartButton node not found in UI scene")
+	
+	if menu_button:
+		menu_button.pressed.connect(_on_menu_button_pressed)
+		print("UI: Connected menu button signal")
+	else:
+		print("ERROR: MenuButton node not found in UI scene")
+	
+	# Connect pause overlay button signals
+	if continue_button:
+		continue_button.pressed.connect(_on_continue_button_pressed)
+		print("UI: Connected continue button signal")
+	else:
+		print("ERROR: ContinueButton node not found in UI scene")
+	
+	if quit_to_menu_button:
+		quit_to_menu_button.pressed.connect(_on_quit_to_menu_button_pressed)
+		print("UI: Connected quit to menu button signal")
+	else:
+		print("ERROR: QuitToMenuButton node not found in UI scene")
+	
+	# Connect to AdMob manager signals
+	if AdMobManager:
+		AdMobManager.interstitial_ad_closed.connect(_on_interstitial_ad_closed)
+		print("UI: Connected to AdMobManager signals")
 
 func update_score(new_score: int) -> void:
 	## Updates the score display with the current score value
-	score_label.text = "💰 Treasure: " + str(new_score)
+	if score_label:
+		score_label.text = "💰 Treasure: " + str(new_score)
 
 func update_next_loot_preview(loot_type: String) -> void:
 	## Updates the preview sprite to show the next loot item
@@ -61,10 +102,14 @@ func update_next_loot_preview(loot_type: String) -> void:
 
 func show_game_over_screen(final_score: int, reason: String) -> void:
 	## Displays visual game over screen with restart options
-	reason_label.text = reason
-	final_score_label.text = "Final Score: " + str(final_score)
-	game_over_container.visible = true
-	restart_button.grab_focus()
+	if reason_label:
+		reason_label.text = reason
+	if final_score_label:
+		final_score_label.text = "Final Score: " + str(final_score)
+	if game_over_container:
+		game_over_container.visible = true
+	if restart_button:
+		restart_button.grab_focus()
 	
 	print("\n=== GAME OVER ===")
 	print("Reason: ", reason)
@@ -73,7 +118,8 @@ func show_game_over_screen(final_score: int, reason: String) -> void:
 
 func hide_game_over_screen() -> void:
 	## Hides the game over screen
-	game_over_container.visible = false
+	if game_over_container:
+		game_over_container.visible = false
 
 func update_fallen_items_warning(fallen_count: int, max_fallen: int) -> void:
 	## Shows warning when items are falling off ship
@@ -106,9 +152,85 @@ func _on_pause_button_pressed() -> void:
 	pause_game_requested.emit()
 
 func _on_restart_button_pressed() -> void:
-	## Handles restart button press
-	restart_game_requested.emit()
+	## Handles restart button press - shows interstitial ad first
+	print("UI: Restart button pressed")
+	
+	if not AdMobManager:
+		print("UI: AdMobManager not available, restarting game directly")
+		restart_game_requested.emit()
+		return
+	
+	# Debug: Check ad manager state
+	print("UI: AdMobManager available, checking ad readiness...")
+	print("UI: AdMob plugin available: ", AdMobManager._admob_plugin != null)
+	
+	# Try to show interstitial ad before restarting
+	if AdMobManager.is_interstitial_ready():
+		print("UI: ✓ Interstitial ad is ready - showing ad before restart")
+		_waiting_for_ad_to_close = true
+		# Disable the button temporarily to prevent multiple clicks
+		if restart_button:
+			restart_button.disabled = true
+			restart_button.text = "🔄 Loading Ad..."
+		
+		# Show the ad
+		var ad_shown: bool = AdMobManager.show_interstitial_ad()
+		if not ad_shown:
+			print("UI: Failed to show ad, restarting directly")
+			_reset_restart_button()
+			restart_game_requested.emit()
+	else:
+		print("UI: ⚠ No interstitial ad ready - checking why...")
+		if AdMobManager._admob_plugin:
+			print("UI: Plugin exists, loading new ad and restarting directly")
+			AdMobManager.load_interstitial_ad()
+		else:
+			print("UI: Plugin not available")
+		restart_game_requested.emit()
+
+func _on_interstitial_ad_closed() -> void:
+	## Called when interstitial ad is closed - now restart the game
+	if _waiting_for_ad_to_close:
+		print("UI: Interstitial ad closed, restarting game now")
+		_waiting_for_ad_to_close = false
+		_reset_restart_button()
+		restart_game_requested.emit()
+
+func _reset_restart_button() -> void:
+	## Reset the restart button to its original state
+	if restart_button:
+		restart_button.disabled = false
+		restart_button.text = "🔄 Set Sail Again! (R)"
 
 func _on_menu_button_pressed() -> void:
 	## Handles return to menu button press
 	return_to_menu_requested.emit()
+
+func show_pause_overlay() -> void:
+	## Shows the pause overlay with continue and quit options
+	if pause_overlay:
+		pause_overlay.visible = true
+		# Focus the continue button for better UX
+		if continue_button:
+			continue_button.grab_focus()
+		print("UI: Showing pause overlay")
+	else:
+		print("ERROR: PauseOverlay node not found")
+
+func hide_pause_overlay() -> void:
+	## Hides the pause overlay
+	if pause_overlay:
+		pause_overlay.visible = false
+		print("UI: Hiding pause overlay")
+	else:
+		print("ERROR: PauseOverlay node not found")
+
+func _on_continue_button_pressed() -> void:
+	## Handles continue button press from pause overlay
+	print("UI: Continue button pressed")
+	continue_game_requested.emit()
+
+func _on_quit_to_menu_button_pressed() -> void:
+	## Handles quit to menu button press from pause overlay
+	print("UI: Quit to menu button pressed from pause overlay")
+	quit_to_menu_from_pause_requested.emit()

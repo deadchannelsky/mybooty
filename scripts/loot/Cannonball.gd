@@ -8,7 +8,7 @@ func _ready() -> void:
 	# Set cannonball-specific properties
 	loot_type = "cannonball"
 	base_score = 25  # Higher score due to difficulty
-	loot_mass = 3.5  # Heavy for its size
+	loot_mass = 6.0  # Heavy for its size
 	loot_friction = 0.3  # Low friction - rolls easily
 	loot_bounce = 0.2  # Moderate bounce
 	

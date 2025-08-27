@@ -107,6 +107,8 @@ func setup_ui_signals() -> void:
 	ui.pause_game_requested.connect(_on_pause_game_requested)
 	ui.restart_game_requested.connect(_on_restart_game_requested)
 	ui.return_to_menu_requested.connect(_on_return_to_menu_requested)
+	ui.continue_game_requested.connect(_on_continue_game_requested)
+	ui.quit_to_menu_from_pause_requested.connect(_on_quit_to_menu_from_pause_requested)
 
 func start_game() -> void:
 	## Starts a new game session
@@ -315,22 +317,39 @@ func check_stack_height() -> void:
 	else:
 		ui.show_height_warning(false)
 
+func pause_game() -> void:
+	## Pauses the game and shows pause overlay
+	if not is_game_active or is_game_paused:
+		return
+	
+	is_game_paused = true
+	get_tree().paused = true
+	ui.show_pause_overlay()
+	print("Game paused - showing pause overlay")
+
+func resume_game() -> void:
+	## Resumes the game and hides pause overlay
+	if not is_game_paused:
+		return
+	
+	is_game_paused = false
+	get_tree().paused = false
+	ui.hide_pause_overlay()
+	print("Game resumed")
+
 func toggle_pause() -> void:
-	## Toggles game pause state
+	## Toggles game pause state (for backward compatibility with input system)
 	if not is_game_active:
 		return
 	
-	is_game_paused = not is_game_paused
-	get_tree().paused = is_game_paused
-	
 	if is_game_paused:
-		print("Game paused - Press P or Space to resume")
+		resume_game()
 	else:
-		print("Game resumed")
+		pause_game()
 
 func _on_pause_game_requested() -> void:
-	## Handles pause button press from UI
-	toggle_pause()
+	## Handles pause button press from UI - always pauses and shows overlay
+	pause_game()
 
 func _on_restart_game_requested() -> void:
 	## Handles restart button press from UI
@@ -339,4 +358,18 @@ func _on_restart_game_requested() -> void:
 func _on_return_to_menu_requested() -> void:
 	## Handles return to menu request from UI
 	print("Returning to main menu...")
+	return_to_main_menu.emit()
+
+func _on_continue_game_requested() -> void:
+	## Handles continue button press from pause overlay
+	print("Continue game requested from pause overlay")
+	resume_game()
+
+func _on_quit_to_menu_from_pause_requested() -> void:
+	## Handles quit to menu button press from pause overlay
+	print("Quit to menu requested from pause overlay")
+	# Resume game first to clean up pause state
+	if is_game_paused:
+		is_game_paused = false
+		get_tree().paused = false
 	return_to_main_menu.emit()

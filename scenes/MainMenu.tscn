@@ -24,7 +24,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024.75, 442.5)
 
 [node name="PlayButtonSprite" type="Sprite2D" parent="."]
-position = Vector2(360, 450)
+position = Vector2(359, 438)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_menu_texture")
 region_enabled = true
@@ -40,7 +40,7 @@ offset_bottom = 510.0
 flat = true
 
 [node name="ChallengesButtonSprite" type="Sprite2D" parent="."]
-position = Vector2(360, 600)
+position = Vector2(359, 597)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_menu_texture")
 region_enabled = true
@@ -55,25 +55,9 @@ offset_right = 560.0
 offset_bottom = 650.0
 flat = true
 
-[node name="LeaderboardsButtonSprite" type="Sprite2D" parent="."]
-position = Vector2(360, 750)
-scale = Vector2(0.7, 0.7)
-texture = ExtResource("2_menu_texture")
-region_enabled = true
-region_rect = Rect2(94.3438, 893.297, 825.187, 225.281)
-
-[node name="LeaderboardsButton" type="Button" parent="."]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 0
-offset_left = 160.0
-offset_top = 700.0
-offset_right = 560.0
-offset_bottom = 800.0
-flat = true
-
 [node name="PirateFlagSprite" type="Sprite2D" parent="."]
-position = Vector2(360, 950)
-scale = Vector2(0.7, 0.7)
+position = Vector2(373, 892.25)
+scale = Vector2(0.7, 1.0939)
 texture = ExtResource("2_menu_texture")
 region_enabled = true
 region_rect = Rect2(89.2812, 1126.17, 883.406, 410.062)
